@@ -1,16 +1,9 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XCircleIcon } from '@heroicons/react/24/solid'
+import type { modalProps } from '../utils/types'
 
-interface props {
-    title: string,
-    subtext: string,
-    buttonText: string,
-    callback: () => void;
-    closable: boolean
-}
-
-export default function Modal({title, subtext, buttonText, callback, closable}: props) {
+export default function Modal({title, subtext, buttonText, callback, closable}: modalProps) {
   const [open, setOpen] = useState(true)
 
   return (

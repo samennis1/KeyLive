@@ -13,13 +13,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { useSession } from 'next-auth/react'
-
-interface navigationItem {
-  name: string,
-  href: string,
-  icon: ForwardRefExoticComponent<SVGProps<SVGSVGElement>>,
-  current: boolean
-}
+import { navigationItem } from '../utils/types';
 
 const navigation: navigationItem[] = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
