@@ -14,5 +14,14 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+
+  images: {
+    remotePatterns: [
+      {
+        hostname: "avatars.githubusercontent.com",
+        protocol: "https"
+      }
+    ]
+  }
 };
 export default config;
