@@ -12,15 +12,12 @@ import {
 } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { useSession } from 'next-auth/react'
-import type { navigationItem } from '../utils/types';
+import type { navigationItem, sidebarInputs } from '../utils/types';
 import Image from 'next/image'
 
 const navigation: navigationItem[] = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Documents', href: '#', icon: InboxIcon, current: false },
+  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
+  { name: 'Products', href: '/dashboard/products', icon: UsersIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
 ]
 const userNavigation = [
@@ -33,14 +30,15 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SideBar() {
+export default function SideBar({initialNumber}: sidebarInputs) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [activePage, setActivePage] = useState(0)
     const [navigationTemp, setNavigation] = useState<navigationItem[]>([]);
     const {data: session} = useSession();
-    
+
     useEffect(() => {
       setNavigation(navigation);
+      changePage(initialNumber ?? 0);
     }, [])
 
     const changePage = (index: number) => {
