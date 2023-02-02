@@ -21,6 +21,8 @@ declare module "next-auth" {
     user: {
       id: string;
       name: string,
+      firstName: string,
+      lastName: string
       email: string,
       image: string
     } ;
@@ -40,8 +42,16 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session({ session, user }) {
+      
       if (session.user) {
         session.user.id = user.id;
+        const name = session.user.name;
+        const [firstName, lastName] = name.split(" ");
+        if(firstName && lastName) {
+          session.user.firstName = firstName;
+          session.user.lastName = lastName;
+        }
+
       }
       return session;
     },
