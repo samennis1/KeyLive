@@ -1,4 +1,3 @@
-import type { ForwardRefExoticComponent, SVGProps} from 'react';
 import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
@@ -13,7 +12,8 @@ import {
 } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { useSession } from 'next-auth/react'
-import { navigationItem } from '../utils/types';
+import type { navigationItem } from '../utils/types';
+import Image from 'next/image'
 
 const navigation: navigationItem[] = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -212,9 +212,11 @@ export default function SideBar() {
                     <div>
                       <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span className="sr-only">Open user menu</span>
-                        <img
+                        <Image
                           className="h-8 w-8 rounded-full"
-                          src={session?.user.image}
+                          src={session ? session.user?.image: ""}
+                          width={500}
+                          height={500}
                           alt=""
                         />
                       </Menu.Button>
