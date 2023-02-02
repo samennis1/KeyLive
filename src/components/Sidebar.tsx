@@ -1,8 +1,8 @@
+import type { ForwardRefExoticComponent, SVGProps} from 'react';
 import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   Bars3BottomLeftIcon,
-  BellIcon,
   CalendarIcon,
   ChartBarIcon,
   FolderIcon,
@@ -17,7 +17,7 @@ import { useSession } from 'next-auth/react'
 interface navigationItem {
   name: string,
   href: string,
-  icon: unknown,
+  icon: ForwardRefExoticComponent<SVGProps<SVGSVGElement>>,
   current: boolean
 }
 
@@ -50,9 +50,12 @@ export default function SideBar() {
     }, [])
 
     const changePage = (index: number) => {
-      if(navigation[activePage] && navigation[index]) {
-        navigation[activePage].current = false;
-        navigation[index].current = true;
+      const getNewIndex = navigation[index]
+      const getCurrentIndex = navigation[activePage];
+
+      if(getCurrentIndex && getNewIndex) {
+        getCurrentIndex.current = false;
+        getNewIndex.current = true;
         setActivePage(index);
         setNavigation([...navigation]);
       }

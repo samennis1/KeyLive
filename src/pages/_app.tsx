@@ -22,6 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return <SessionProvider session={session as Session}>{layout}</SessionProvider>;
 };
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
