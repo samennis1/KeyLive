@@ -1,4 +1,5 @@
 import { ForwardRefExoticComponent, SVGProps } from "react";
+import type {ProductCode} from '@prisma/client'
 
 export interface modalProps {
   title: string;
@@ -22,4 +23,25 @@ export interface statisticObject {
 
 export interface tripleStatProps {
   listOfStats: statisticObject[];
+}
+
+export interface productKeyTableProps {
+    tableData: ProductCode[],
+    title: string,
+    subtext: string,
+    button: Button
+}
+
+export interface Button {
+  text: string,
+  callback: () => void;
+}
+
+export interface reqResponse {
+  data: object,
+  success: boolean
+}
+
+export interface productKeyReturnType {
+  keys: ProductCode[]
 }
