@@ -1,13 +1,33 @@
+import { ProductCode } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import type { ReactElement } from "react";
-import Modal from "../components/Modal";
-import SideBar from "../components/Sidebar";
-import TripleStats from "../components/TripleStats";
-import { statisticObject } from "../utils/types";
-import type { NextPageWithLayout } from "./_app";
+import { ReactElement, useEffect, useState } from "react";
+import Modal from "../../components/Modal";
+import SideBar from "../../components/Sidebar";
+import Table from "../../components/ProductKeyTable";
+import TripleStats from "../../components/TripleStats";
+import { api } from "../../utils/api";
+import type { productCodeExtension, statisticObject } from "../../utils/types";
+import type { NextPageWithLayout } from "../_app";
 
 const Dashboard: NextPageWithLayout = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const { data: keyData } = api.keys.getAll.useQuery({max: 10});
+  const [modalShow, showModal] = useState(false);
+  const [keys, setKeys] = useState<productCodeExtension[]>([]);
+
+  useEffect(() => {
+    if(keyData) {
+      setKeys([...keyData]);
+    }
+  }, [keyData])
+
+  useEffect(() => {
+    if(status == "unauthenticated") {
+      showModal(true);
+    } else {
+      showModal(false)
+    }
+  }, [status])
 
   const buttonCallback = () => {
     window.location.href = "/";
@@ -27,10 +47,9 @@ const Dashboard: NextPageWithLayout = () => {
       topNumber: "40%"
     }
   ]
-
   return (
     <>
-      {!session ? (
+      {modalShow ? (
         <Modal
           title="You are not logged in!"
           subtext="Please login or create an account to view the Dashboard"
@@ -38,7 +57,7 @@ const Dashboard: NextPageWithLayout = () => {
           callback={buttonCallback}
           closable={false}
         />
-      ) : (
+      ) : ""} {session ? (
         <>
           <SideBar></SideBar>
           <div className="flex flex-1 flex-col md:pl-64">
@@ -52,13 +71,18 @@ const Dashboard: NextPageWithLayout = () => {
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                   {/* Replace with your content */}
                   <TripleStats listOfStats={listofStats}/>
+                  <Table 
+                  title="Product Codes" 
+                  button={{text: "View All", callback: () => {return null;}}} 
+                  subtext="View your most recent product code updates"
+                  tableData={keys}/>
                   {/* /End replace */}
                 </div>
               </div>
             </main>
           </div>
         </>
-      )}
+      ) : ""}
     </>
   );
 };
