@@ -5,3 +5,6 @@
 - TypeScript
 - NextAuth
 - Prisma
+- Tailwind CSS
+- Tailwind UI
+- tRPC
