@@ -70,6 +70,7 @@ model ProductCode {
     id              String  @id @default(cuid())
     key             String  @unique
     activatedTime   DateTime?
+    createdTime     DateTime @default(now())
     status          String  @default("available")
     product         Product[]
     product_id      String?
