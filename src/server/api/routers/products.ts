@@ -1,6 +1,6 @@
 import { Product } from "@prisma/client";
 import { z } from "zod";
-import { reqResponse } from "../../../utils/types";
+import { productExtension, reqResponse } from "../../../utils/types";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const productRouter = createTRPCRouter({
@@ -26,19 +26,41 @@ export const productRouter = createTRPCRouter({
       };
     }),
 
-    get: protectedProcedure
-    .query(async ({ctx})=> {
+    getAll: protectedProcedure
+    .query(async ({ctx}): Promise<productExtension[]> => {
       const getProducts = await ctx.prisma.product.findMany({
         where: {
           user: {
             every: {id: ctx.session.user.id} 
-          }
+          },
         },
         include: {
-          user: true
+          user: true,
+          keys: true
         }
       })
 
       return getProducts;
-    })
+    }),
+
+    getOne: protectedProcedure
+    .input(z.object({product_id: z.string()}))
+    .query(async ({ctx, input}): Promise<productExtension | null> => {
+      const product_id = input?.product_id;
+
+      const getProducts = await ctx.prisma.product.findFirst({
+        where: {
+          user: {
+            every: {id: ctx.session.user.id} 
+          },
+          id: product_id
+        },
+        include: {
+          user: true,
+          keys: true
+        }
+      })
+
+      return getProducts;
+    }),
 });
