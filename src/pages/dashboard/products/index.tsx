@@ -6,16 +6,16 @@ import SideBar from "../../../components/Sidebar";
 import Table from "../../../components/ProductKeyTable";
 import TripleStats from "../../../components/TripleStats";
 import { api } from "../../../utils/api";
-import type { productCodeExtension, statisticObject } from "../../../utils/types";
+import type { productCodeExtension, productExtension, statisticObject } from "../../../utils/types";
 import type { NextPageWithLayout } from "../../_app";
 import ProductTable from "../../../components/ProductTable";
 
 const Dashboard: NextPageWithLayout = () => {
   const { data: session, status } = useSession();
   const { data: keyData } = api.keys.getAll.useQuery({max: 10});
-  const { data: products } = api.products.get.useQuery();
+  const { data: products } = api.products.getAll.useQuery();
   const [modalShow, showModal] = useState(false);
-  const [productsList, setProducts] = useState<Product[]>([]);
+  const [productsList, setProducts] = useState<productExtension[]>([]);
 
   useEffect(() => {
     if(products) {
