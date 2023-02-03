@@ -1,5 +1,5 @@
 import { ForwardRefExoticComponent, SVGProps } from "react";
-import type {Product, ProductCode} from '@prisma/client'
+import type {Product, ProductCode, User} from '@prisma/client'
 
 export interface modalProps {
   title: string;
@@ -50,8 +50,13 @@ export interface productCodeDateExtension extends ProductCode {
   createdTime: Date
 }
 
+export interface productExtension extends Product {
+  keys: ProductCode[],
+  user: User[]
+}
+
 export interface productListGrid {
-  products: Product[]
+  products: productExtension[]
 }
 
 export interface sidebarInputs {
