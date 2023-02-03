@@ -14,11 +14,12 @@ import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { useSession } from 'next-auth/react'
 import type { navigationItem, sidebarInputs } from '../utils/types';
 import Image from 'next/image'
+import { CogIcon } from '@heroicons/react/24/solid'
 
 const navigation: navigationItem[] = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
   { name: 'Products', href: '/dashboard/products', icon: UsersIcon, current: false },
-  { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+  { name: 'Access Tokens', href: '/dashboard/token', icon: CogIcon, current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },

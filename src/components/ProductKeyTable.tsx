@@ -11,9 +11,7 @@ export default function Table({
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold text-gray-900">{title}</h1>
-          <p className="mt-2 text-sm text-gray-700">
-            {subtext}
-          </p>
+          <p className="mt-2 text-sm text-gray-700">{subtext}</p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
@@ -64,14 +62,20 @@ export default function Table({
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {tableData.map(row => (
+                {tableData.map((row) => (
                   <tr key={row.id}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0">
                       {row.key}
                     </td>
                     <td className="whitespace-nowrap py-4 px-3 text-sm text-gray-500">
-                      <p className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                      {row.status}
+                      <p
+                        className={`inline-flex rounded-full bg-${
+                          row.status == "available" ? "green" : "red"
+                        }-100 px-2 text-xs font-semibold leading-5 text-${
+                          row.status == "available" ? "green" : "red"
+                        }-800`}
+                      >
+                        {row.status}
                       </p>
                     </td>
                     <td className="whitespace-nowrap py-4 px-3 text-sm text-gray-500">
