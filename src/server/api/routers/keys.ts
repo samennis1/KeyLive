@@ -32,9 +32,7 @@ export const keyRouter = createTRPCRouter({
         return p.concat(n);
       })
       .sort((prev, next) => {
-        const {createdTime: prevTime} : Date = prev;
-        const {createdTime : nextTime} : Date = next;
-        return (prevTime.getTime() - nextTime.getTime())
+        return (prev.createdTime.getTime() - next.createdTime.getTime())
       })
 
     return mapped;
