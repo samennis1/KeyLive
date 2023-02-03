@@ -38,7 +38,8 @@ export interface Button {
 }
 
 export interface reqResponse {
-  data: object,
+  data?: object,
+  error?: string,
   success: boolean
 }
 
